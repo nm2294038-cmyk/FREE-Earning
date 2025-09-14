@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>60 IFrames Loader jab tak all load nai ho jaty tab tak back nai jana app payment pit nai mily gi</title>
+  <style>
+    body {font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f5f5f5;}
+    #container {display: flex; flex-wrap: wrap; gap: 10px;}
+    .iframe-item {width: 300px; height: 50px; border: 1px solid #ddd; background: white; display: flex; flex-direction: column;}
+    .iframe-header {display: flex; justify-content: space-between; align-items: center; padding: 5px; background-color: #eee; border-bottom: 1px solid #ddd;}
+    .iframe-number-label {font-size: 0.9em; font-weight: bold;}
+    .iframe-timer-label {font-size: 0.8em; color: #555;}
+    .actual-iframe {flex-grow: 1; border: none; width: 100%; height: 100%;}
+  </style>
+</head>
+<body>
+  <h2>50 IFrames Loader Jab Tak All Web Page Load Nai Hoty Tab Tak back Nai Ja Nai Tu App ko Payment Nai Mily Gi</h2>
+  <div id="container"></div>
+
+  <script>
+    const urls = [
+      "https://www.revenuecpmgate.com/qu9cjwa4df?key=717c9d60b9d2477288bd45f7658258a9",
+      "https://www.revenuecpmgate.com/j2uiqhauqw?key=ae5bd1afab7ee4eba54a1573c57f59bd",
+      "https://www.revenuecpmgate.com/b05316phs?key=c825eb9e82451db69b817d6730083d4c " ,
+      "https://www.revenuecpmgate.com/pbgrk7ab?key=148db18f2594b39b1ab9db7c58d958b0"
+    ];
+
+    const TOTAL_IFRAMES = 50;
+    const RELOAD_INTERVAL_SECONDS = 45;
+    const container = document.getElementById("container");
+
+    function startIframe(url, index) {
+      const item = document.createElement("div");
+      item.className = "iframe-item";
+
+      const header = document.createElement("div");
+      header.className = "iframe-header";
+
+      const lbl = document.createElement("span");
+      lbl.className = "iframe-number-label";
+      lbl.textContent = `IFrame ${index+1}`;
+
+      const timerLbl = document.createElement("span");
+      timerLbl.className = "iframe-timer-label";
+      timerLbl.textContent = "اگلا ریفریش: --";
+
+      header.append(lbl, timerLbl);
+
+      const iframe = document.createElement("iframe");
+      iframe.className = "actual-iframe";
+      iframe.src = url + (url.includes("?") ? "&" : "?") + "rnd=" + Math.random();
+
+      item.append(header, iframe);
+      container.append(item);
+
+      let secondsLeft = RELOAD_INTERVAL_SECONDS;
+      function updateTimer() {
+        timerLbl.textContent = `اگلا ریفریش: ${secondsLeft} سیکنڈ`;
+        secondsLeft--;
+        if (secondsLeft < 0) secondsLeft = RELOAD_INTERVAL_SECONDS;
+      }
+      setInterval(updateTimer, 1000);
+
+      setInterval(() => {
+        iframe.src = url + (url.includes("?") ? "&" : "?") + "rnd=" + Math.random();
+        secondsLeft = RELOAD_INTERVAL_SECONDS;
+        updateTimer();
+      }, RELOAD_INTERVAL_SECONDS * 1000);
+
+      updateTimer();
+    }
+
+    // 100 iframes round-robin دونوں لنکس پر
+    for (let i = 0; i < TOTAL_IFRAMES; i++) {
+      const url = urls[i % urls.length];
+      startIframe(url, i);
+    }
+  </script>
+</body>
+</html>
